@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block basecontent %}
+<section class="container mt-5 mb-5">
+    <h1 class="text-info">{% trans 'Contact Us' %}</h1>
+<div class="row">
+    <div class="col-lg-4">
+        <form action="" method="post">
+            {% csrf_token %}
+            {% include 'forms/bs4_form.html' with form=contact_form %}
+            <div class="btn-inverse"><button type="submit" class="btn btn-info">CONTACT US</button></div>
+        </form>
+    </div>
+</div>
+</section>
+{% endblock %}

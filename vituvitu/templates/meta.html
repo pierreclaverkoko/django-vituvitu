@@ -1,0 +1,7 @@
+{% block title %}{% if title %}<title>{{ title }}</title>{% else %}
+<title>{{ page_meta_title }} | {{ page_meta_title_append }}</title>{% endif %}{% endblock %}
+<meta charset="utf-8">
+{% if no_meta_viewport %}{% else %}<meta name="viewport" content="width=device-width, initial-scale=1">{% endif %}
+<meta name="keywords" content="{{ page_meta_keywords }}">
+<meta name="description" content="{{ page_meta_description }}">
+<meta name="author" content="{{ page_meta_author }}">

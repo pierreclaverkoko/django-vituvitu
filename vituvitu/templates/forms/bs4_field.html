@@ -1,0 +1,40 @@
+{% load widget_tweaks %}
+{% load bs_forms %}
+
+<div class="form-group">
+    <label for="{{ field.id_for_label }}">
+        {{ field.label }}
+        {% if field.field.required %}<code>*</code>{% endif %}
+    </label>
+
+    {% if form.is_bound %}
+        {% if field.errors %}
+            {% if field|fieldtype == 'CheckboxInput' or field|fieldtype == 'RadioInput' %}
+                {% render_field field class="is-invalid" %}
+            {% else %}
+                {% render_field field class="form-control is-invalid" %}
+            {% endif %}
+            {% for error in field.errors %}
+                <div class="invalid-feedback">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        {% else %}
+            {% if field|fieldtype == 'CheckboxInput' or field|fieldtype == 'RadioInput' %}
+                {% render_field field class="is-valid" %}
+            {% else %}
+                {% render_field field class="form-control is-valid" %}
+            {% endif %}
+        {% endif %}
+    {% else %}
+        {% if field|fieldtype == 'CheckboxInput' or field|fieldtype == 'RadioInput' %}
+            {% render_field field %}
+        {% else %}
+            {% render_field field class="form-control" %}
+        {% endif %}
+    {% endif %}
+
+    {% if field.help_text %}
+      <small class="form-text text-muted">{{ field.help_text }}</small>
+    {% endif %}
+  </div>
