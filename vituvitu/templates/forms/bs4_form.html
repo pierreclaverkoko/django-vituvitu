@@ -1,17 +1,7 @@
 {% load widget_tweaks i18n %}
 
-{% for hidden_field in form.hidden_fields %}
-  {{ hidden_field }}
-{% endfor %}
-
-{% if form.non_field_errors %}
-  <div class="alert alert-danger" role="alert">
-    {% for error in form.non_field_errors %}
-      {{ error }}
-    {% endfor %}
-  </div>
-{% endif %}
+{% include 'libs/bs4_form_head.html' with form=form %}
 
 {% for field in form.visible_fields %}
-  {% include 'forms/bs4_field.html' with field=field form=form %}
+  {% include 'libs/bs4_field.html' with field=field form=form %}
 {% endfor %}

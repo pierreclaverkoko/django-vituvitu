@@ -1,0 +1,88 @@
+{% if messages and permanent_messages %}
+<div class="mt-3">
+        {% for message in messages %}
+        <div class="row" style="padding:0px 15px;">
+            <div class="col-lg-12 alert {% if message.tags == "error" %} alert-danger{% else %} alert-{{ message.tags }}{% endif %} alert-dismissible" role="alert" style="margin-bottom:5px;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+                <br/>
+                <small class="text-muted float-right" style="font-size:9px;">
+                    &copy; {{ YEAR }} <b>Vizion CBS <i>v{{ VIZION_CBS_VERSION|default:'0.0.0' }}</i></b>
+                    <i>Provided by <a href="http://ubuviz.com" target="_blank">UbuViz</a></i>
+                </small>
+            </div>
+        </div>
+        {% endfor %}
+</div>
+
+  <hr/>{% endif %}
+{% if enaaaaaabled and messages and not permanent_messages and not multiple_messages %}
+<script type="text/javascript">
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 2 * 60 * 1000,
+  customContainerClass: '{{ message.tags }}',
+  customClass: '{{ message.tags }}'
+});
+
+{% for message in messages %}
+Toast.fire({
+  type: "{{ message.tags }}",
+  title: "{{ message }}"
+})
+{% endfor %}
+</script>
+{% endif %}
+
+{% comment %}{% if messages and not permanent_messages and multiple_messages %}{% endcomment %}
+{% if messages and not permanent_messages %}
+<script type="text/javascript">
+    {% for message in messages %}
+    // Considering tag to receive from Backend
+    var bg_info = "linear-gradient(to right, ##0a5dab, #88c1f7)";
+    var bg_success = "linear-gradient(to right, #0bba1a, #92fc9b)";
+    var bg_warning = "linear-gradient(to right, #b7ba0b, #f0f277)";
+    var bg_error = "linear-gradient(to right, #cc1010, #f27777)";
+
+    Toastify({
+      text: "{{ message }}",
+      duration: 2 * 60 * 1000,
+      newWindow: true,
+      close: true,
+      stopOnFocus: true,
+      backgroundColor: bg_{{ message.tags }},
+      className: "{{ message.tags }}",
+    }).showToast();
+    {% endfor %}
+</script>
+{% endif %}
+
+
+<!-- <script type="text/javascript">
+toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-top-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+};
+
+{% for message in messages %}
+toastr["{{ message.tags }}"]("{{ message }}");
+toastr.info("{{ message }}");
+{% endfor %}
+</script> -->
